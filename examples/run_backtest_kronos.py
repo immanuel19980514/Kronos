@@ -419,9 +419,9 @@ def main():
     # 配置参数
     BACKTEST_CONFIG = {
         "stock_code": "000831",  # 要回测的股票代码
-        "data_dir": r"D:\lianghuajiaoyi\Kronos\examples\data",  # 历史数据目录
-        "model_dir": r"D:\lianghuajiaoyi\Kronos\examples\yuce",  # 模型预测结果目录
-        "output_dir": r"D:\lianghuajiaoyi\Kronos\examples\backtest",  # 回测结果输出目录
+        "data_dir": r"C:\Projects\Kronos\examples\data",  # 历史数据目录
+        "model_dir": r"C:\Projects\Kronos\examples\yuce",  # 模型预测结果目录
+        "output_dir": r"C:\Projects\Kronos\examples\backtest",  # 回测结果输出目录
         "initial_capital": 100000,  # 初始资金
         "threshold": 0.02  # 交易阈值（2%）
     }

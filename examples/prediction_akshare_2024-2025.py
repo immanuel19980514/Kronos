@@ -398,13 +398,16 @@ def main(stock_code="002354", stock_name="天娱数科", data_dir="./data", pred
     try:
         # 1. 加载模型和分词器
         print("\n步骤1: 加载Kronos模型和分词器...")
+        
+        #tokenizer = KronosTokenizer.from_pretrained("NeoQuasar/Kronos-Tokenizer-base")
+        #model = Kronos.from_pretrained("NeoQuasar/Kronos-base")
         tokenizer = KronosTokenizer.from_pretrained("NeoQuasar/Kronos-Tokenizer-base")
-        model = Kronos.from_pretrained("NeoQuasar/Kronos-base")
+        model = Kronos.from_pretrained("NeoQuasar/Kronos-small")
         print("✅ 模型加载完成")
 
         # 2. 实例化预测器
         print("步骤2: 初始化预测器...")
-        predictor = KronosPredictor(model, tokenizer, device="cuda:0", max_context=512)
+        predictor = KronosPredictor(model, tokenizer, device="cpu", max_context=512)
         print("✅ 预测器初始化完成")
 
         # 3. 准备数据
@@ -522,13 +525,13 @@ if __name__ == "__main__":
         "stock_name": "昆仑万维",  # 股票名称
         "data_dir": "./data",  # 数据文件目录
         "pred_days": 100,  # 预测100个自然日
-        "output_dir": r"D:\lianghuajiaoyi\Kronos\examples\yuce"  # 输出文件目录
+        "output_dir": r"C:\Projects\Kronos\examples\yuce2"  # 输出文件目录
     }
 
     # 其他股票配置示例：
-    # STOCK_CONFIG = {"stock_code": "000001", "stock_name": "平安银行", "data_dir": "./data", "pred_days": 100, "output_dir": r"D:\lianghuajiaoyi\Kronos\examples\yuce"}
-    # STOCK_CONFIG = {"stock_code": "600036", "stock_name": "招商银行", "data_dir": "./data", "pred_days": 100, "output_dir": r"D:\lianghuajiaoyi\Kronos\examples\yuce"}
-    # STOCK_CONFIG = {"stock_code": "300750", "stock_name": "宁德时代", "data_dir": "./data", "pred_days": 100, "output_dir": r"D:\lianghuajiaoyi\Kronos\examples\yuce"}
+    # STOCK_CONFIG = {"stock_code": "000001", "stock_name": "平安银行", "data_dir": "./data", "pred_days": 100, "output_dir": r"C:\Projects\Kronos\examples\yuce"}
+    # STOCK_CONFIG = {"stock_code": "600036", "stock_name": "招商银行", "data_dir": "./data", "pred_days": 100, "output_dir": r"C:\Projects\Kronos\examples\yuce"}
+    # STOCK_CONFIG = {"stock_code": "300750", "stock_name": "宁德时代", "data_dir": "./data", "pred_days": 100, "output_dir": r"C:\Projects\Kronos\examples\yuce"}
     # =========================================================
 
     print("🤖 智能股票预测工具")

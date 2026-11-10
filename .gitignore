@@ -43,6 +43,14 @@ Desktop.ini
 # Linux
 *~
 
+# Large directories (model weights, generated outputs)
+/models/
+/outputs/
+/kronos_service/data/
+/kronos_service/figures/
+/kronos_service/db/
+/kronos_service/logs/
+
 # Data files (large files)
 *.feather
 *.parquet

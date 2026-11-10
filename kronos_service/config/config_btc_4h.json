@@ -1,0 +1,64 @@
+{
+    "KRONOS_ROOT": "C:\\Projects\\Kronos",
+    "FREQTRADE_ROOT": "C:\\Projects\\freqtrade",        // freqtrade 根目录，用于读取 user_data 目录下的k线数据文件
+
+    "EXCHANGE": "binance",
+    "PAIR": "BTC/USDT:USDT",
+    "INFORMATIVE_PAIRS": ["ETH/USDT:USDT", "SOL/USDT:USDT"],
+    "TIMEFRAME": "4h",
+    "TRADING_MODE": "futures",
+    "VERBOSE": true,
+
+    "LIVE_SOURCE_PRIORITY": ["api", "feather"],
+    "API_BASE": "http://127.0.0.1:8080",
+    "API_USERNAME": "freqtrader",
+    "API_PASSWORD": "freqtrader",
+    "API_TIMEOUT_SEC": 30,
+    "STALE_TOLERANCE": 2.5,
+
+    "TABLE_MAIN": "kr_predict_result",
+    "TABLE_LONG": "kr_predict_list_long",
+    "TABLE_SHORT": "kr_predict_list_short",
+    "DB_BUSY_TIMEOUT_MS": 20000,
+
+    "LOOKBACK": 100,                                //4h周期下，100个k线，16.6天
+    "MIN_LOOKBACK": 40,
+    "LONG_LEN": 40,
+    "SHORT_LEN": 10,
+    "SAMPLE_COUNT": 5,
+    "MAX_CONTEXT": 512,
+    "TEMPERATURE": 1.0,
+    "TOP_K": 0,
+    "TOP_P": 0.9,
+    "CLIP": 5.0,
+    "DEVICE": "cpu",
+    "CPU_THREADS": 8,
+    "SINGLE_ROLLOUT": false,
+
+    "ZZ_HIST_BARS": 10,
+    "ZZ_ATR_PERIOD": 10,
+    "ZZ_ATR_MULT": 2.0,
+    "ZZ_MIN_BARS": 5,
+
+    "TREND_EPS": 0.002,
+    "ER_TREND": 0.20,
+    "ER_CHOP": 0.10,
+    "CONS_MIN": 1.00,
+    "THETA": 0.002,
+    "MIN_RR": 1.00,
+
+    "CLOSE_DELAY_SEC": 20,
+    // 按周期错峰：同一整点 5m/30m/4h 都会触发，用不同延迟让三个实例串行，
+    // 避免同时抢 CPU。未配置的周期回落到 CLOSE_DELAY_SEC。
+    // 建议值 = 前一个实例的典型耗时：5m ~90s、30m ~90s，故 30m 延后 120s、
+    // 4h 延后 240s（4h 周期下 4 分钟延迟可忽略）。若实测更快可自行调小。
+    "CLOSE_DELAY_BY_TF": {"5m": 20, "30m": 120, "4h": 240},
+    "POLL_RETRY": 4,
+    "POLL_RETRY_INTERVAL": 5,
+
+    // true = 所有产品一次批量推理；false = 逐产品串行推理（日志会打印两种模式耗时）
+    "BATCH_PREDICT": true,
+    
+    "FIGURE": true,
+    "FIGURE_MANY_PERIOD": 24                     //输出总图的间隔，最好是24小时的公约数，1，2，3，4，6，8，12，24
+}

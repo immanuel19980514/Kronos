@@ -51,8 +51,8 @@ class StockPredictorGUI:
         self.default_config = {
             "stock_code": "600580",
             "stock_name": "卧龙电驱",
-            "data_dir": r"D:\lianghuajiaoyi\Kronos\examples\data",
-            "output_dir": r"D:\lianghuajiaoyi\Kronos\examples\yuce",
+            "data_dir": r"C:\Projects\Kronos\examples\data",
+            "output_dir": r"C:\Projects\Kronos\examples\yuce",
             "pred_days": 60,
             "history_years": 1
         }
@@ -124,7 +124,7 @@ class StockPredictorGUI:
         # 数据目录
         tk.Label(dir_frame, text="数据目录:", bg='#f0f0f0', font=("Arial", 10)).grid(row=0, column=0, sticky=tk.W,
                                                                                      padx=5, pady=5)
-        self.data_dir_var = tk.StringVar(value=r"D:\lianghuajiaoyi\Kronos\examples\data")
+        self.data_dir_var = tk.StringVar(value=r"C:\Projects\Kronos\examples\data")
         data_dir_entry = tk.Entry(dir_frame, textvariable=self.data_dir_var, font=("Arial", 10), width=40)
         data_dir_entry.grid(row=0, column=1, padx=5, pady=5)
         tk.Button(dir_frame, text="浏览", command=self.browse_data_dir, font=("Arial", 9)).grid(row=0, column=2, padx=5,
@@ -133,7 +133,7 @@ class StockPredictorGUI:
         # 输出目录
         tk.Label(dir_frame, text="输出目录:", bg='#f0f0f0', font=("Arial", 10)).grid(row=1, column=0, sticky=tk.W,
                                                                                      padx=5, pady=5)
-        self.output_dir_var = tk.StringVar(value=r"D:\lianghuajiaoyi\Kronos\examples\yuce")
+        self.output_dir_var = tk.StringVar(value=r"C:\Projects\Kronos\examples\yuce")
         output_dir_entry = tk.Entry(dir_frame, textvariable=self.output_dir_var, font=("Arial", 10), width=40)
         output_dir_entry.grid(row=1, column=1, padx=5, pady=5)
         tk.Button(dir_frame, text="浏览", command=self.browse_output_dir, font=("Arial", 9)).grid(row=1, column=2,
@@ -225,8 +225,8 @@ class StockPredictorGUI:
         self.stock_name_var.set("卧龙电驱")
         self.pred_days_var.set("60")
         self.history_years_var.set("1")
-        self.data_dir_var.set(r"D:\lianghuajiaoyi\Kronos\examples\data")
-        self.output_dir_var.set(r"D:\lianghuajiaoyi\Kronos\examples\yuce")
+        self.data_dir_var.set(r"C:\Projects\Kronos\examples\data")
+        self.output_dir_var.set(r"C:\Projects\Kronos\examples\yuce")
         self.result_text.delete(1.0, tk.END)
         self.progress_var.set("等待开始预测...")
 

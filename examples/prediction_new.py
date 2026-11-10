@@ -1167,7 +1167,7 @@ def run_comprehensive_kronos_prediction(stock_code, stock_name, data_dir, pred_d
         print("\n步骤2: 加载Kronos模型和分词器...")
         try:
             tokenizer = KronosTokenizer.from_pretrained("NeoQuasar/Kronos-Tokenizer-base")
-            model = Kronos.from_pretrained("NeoQuasar/Kronos-base")
+            model = Kronos.from_pretrained("NeoQuasar/Kronos-small")
             print("✅ 模型加载完成 - 使用Kronos-base模型")
         except Exception as e:
             print(f"❌ 模型加载失败: {e}")
@@ -1176,7 +1176,7 @@ def run_comprehensive_kronos_prediction(stock_code, stock_name, data_dir, pred_d
 
         # 3. 实例化预测器
         print("步骤3: 初始化预测器...")
-        predictor = KronosPredictor(model, tokenizer, device="cuda:0", max_context=512)
+        predictor = KronosPredictor(model, tokenizer, device="cpu", max_context=512)
         print("✅ 预测器初始化完成")
 
         # 4. 准备数据
@@ -1307,9 +1307,9 @@ def main():
     STOCK_CONFIG = {
         "stock_code": "603288",
         "stock_name": "海天味业",
-        "data_dir": r"D:\lianghuajiaoyi\Kronos\examples\data",
+        "data_dir": r"C:\Projects\Kronos\examples\data",
         "pred_days": 60,
-        "output_dir": r"D:\lianghuajiaoyi\Kronos\examples\yuce",
+        "output_dir": r"C:\Projects\Kronos\examples\yuce",
         "history_years": 1
     }
 

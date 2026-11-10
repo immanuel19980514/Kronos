@@ -22,6 +22,13 @@ Example:
 """
 
 import os
+
+# 强制直连：本地代理(127.0.0.1:15490)转发国内财经接口会超时/DNS失败
+# NO_PROXY='*' 让 requests/akshare 绕过所有代理（含 Windows 系统代理）
+# os.environ["NO_PROXY"] = "*"
+# for _k in ("HTTP_PROXY", "HTTPS_PROXY", "http_proxy", "https_proxy", "ALL_PROXY", "all_proxy"):
+#     os.environ.pop(_k, None)
+
 import argparse
 import time
 import pandas as pd
@@ -36,7 +43,7 @@ os.makedirs(save_dir, exist_ok=True)
 
 # Setting
 TOKENIZER_PRETRAINED = "NeoQuasar/Kronos-Tokenizer-base"
-MODEL_PRETRAINED = "NeoQuasar/Kronos-base"
+MODEL_PRETRAINED = "NeoQuasar/Kronos-small"
 DEVICE = "cpu"  # "cuda:0"
 MAX_CONTEXT = 512
 LOOKBACK = 400
@@ -46,24 +53,37 @@ TOP_P = 0.9
 SAMPLE_COUNT = 1
 
 def load_data(symbol: str) -> pd.DataFrame:
-    print(f"📥 Fetching {symbol} daily data from akshare ...")
-
-    max_retries = 3
+    # 优先使用本地数据文件：./data/<symbol>_daily.csv
+    # 列格式与 akshare 一致（日期/开盘/收盘/最高/最低/成交量/成交额），也兼容英文列名
+    local_file = os.path.join("./data", f"{symbol}_daily.csv")
     df = None
 
-    # Retry mechanism
-    for attempt in range(1, max_retries + 1):
-        try:
-            df = ak.stock_zh_a_hist(symbol=symbol, period="daily", adjust="")
-            if df is not None and not df.empty:
-                break
-        except Exception as e:
-            print(f"⚠️ Attempt {attempt}/{max_retries} failed: {e}")
-        time.sleep(1.5)
+    if os.path.exists(local_file):
+        print(f"� Local data file found: {local_file}, loading from disk ...")
+        df = pd.read_csv(local_file)
+        # 兼容英文列名
+        en_cols = {"date": "日期", "open": "开盘", "close": "收盘", "high": "最高",
+                   "low": "最低", "volume": "成交量", "amount": "成交额"}
+        if "日期" not in df.columns:
+            df.rename(columns=en_cols, inplace=True)
+    else:
+        print(f"� Fetching {symbol} daily data from akshare ...")
+
+        max_retries = 3
+
+        # Retry mechanism
+        for attempt in range(1, max_retries + 1):
+            try:
+                df = ak.stock_zh_a_hist(symbol=symbol, period="daily", adjust="")
+                if df is not None and not df.empty:
+                    break
+            except Exception as e:
+                print(f"⚠️ Attempt {attempt}/{max_retries} failed: {e}")
+            time.sleep(1.5)
 
     # If still empty after retries
     if df is None or df.empty:
-        print(f"❌ Failed to fetch data for {symbol} after {max_retries} attempts. Exiting.")
+        print(f"❌ No data available for {symbol} (no local file ./data/{symbol}_daily.csv and akshare fetch failed). Exiting.")
         sys.exit(1)
     
     df.rename(columns={
